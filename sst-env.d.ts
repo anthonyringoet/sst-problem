@@ -3,6 +3,10 @@
 import "sst"
 declare module "sst" {
   export interface Resource {
+    "another": {
+      "type": "sst.aws.Queue"
+      "url": string
+    }
     "api": {
       "name": string
       "type": "sst.aws.Function"
@@ -18,6 +22,10 @@ declare module "sst" {
       "url": string
     }
     "some": {
+      "type": "sst.aws.Queue"
+      "url": string
+    }
+    "third": {
       "type": "sst.aws.Queue"
       "url": string
     }

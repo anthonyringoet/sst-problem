@@ -24,6 +24,15 @@ export default $config({
     some_queue.subscribe({
       handler: "src/consumer.handler"
     });
+    const another_queue = new sst.aws.Queue("another");
+    another_queue.subscribe({
+      handler: "src/consumer.handler"
+    });
+    const third_queue = new sst.aws.Queue("third");
+    third_queue.subscribe({
+      handler: "src/consumer.handler"
+    });
+
     const topic = new sst.aws.SnsTopic("topic");
     // This works
     // topic.subscribeQueue(some_queue.arn);
@@ -42,9 +51,23 @@ export default $config({
     topic.subscribeQueue(some_queue.arn, {
         filter: {
             type: [
-                "event.even",
-                "event.odd",
-                "event.random"
+              "event.even",
+              "event.odd",
+              "event.random"
+            ]
+        }
+    });
+    topic.subscribeQueue(another_queue.arn, {
+        filter: {
+            type: [
+              "event.odd",
+            ]
+        }
+    });
+    topic.subscribeQueue(third_queue.arn, {
+        filter: {
+            type: [
+              "event.random",
             ]
         }
     });
