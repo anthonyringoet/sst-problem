@@ -20,11 +20,11 @@ export default $config({
     });
 
     // where we focus on our issue
-    const some_queue = new sst.aws.Queue("some");
-    some_queue.subscribe({
-      handler: "src/consumer.handler"
-    });
-    const topic = new sst.aws.SnsTopic("topic");
+    // const some_queue = new sst.aws.Queue("some");
+    // some_queue.subscribe({
+    //   handler: "src/consumer.handler"
+    // });
+
     // This works
     // topic.subscribeQueue(some_queue.arn);
 
@@ -39,15 +39,19 @@ export default $config({
     //     Subscription: operation error SNS: Subscribe, https response error StatusCode: 400, RequestID: 76bf1625-81f5-5d8f-90fd-49
     //  65b44a4544, InvalidParameter: Invalid parameter: Attributes Reason: Subscription already exists with different attributes
 
-    topic.subscribeQueue(some_queue.arn, {
-        filter: {
-            type: [
-                "event.even",
-                "event.odd",
-                "event.random"
-            ]
-        }
-    });
+    // topic.subscribeQueue(some_queue.arn, {
+    //     filter: {
+    //         type: [
+    //             "event.even",
+    //             "event.odd",
+    //             "event.random"
+    //         ]
+    //     }
+    // });
+
+    const { topic } = await import("./infra/topic");
+    const { queue_one }  = await import("./infra/queue_1");
+    const { queue_two }  = await import("./infra/queue_2");
 
     const publish_api = new sst.aws.Function("api", {
       handler: "src/api.handler",
@@ -58,7 +62,9 @@ export default $config({
 
     return {
       bucket_name: bucket_beep.name,
-      queue_url: some_queue.url,
+      // queue_url: some_queue.url,
+      queue_one_url: queue_one.url,
+      queue_two_url: queue_two.url,
       hello_function_url: hello_fn.url,
       api_url: publish_api.url
     }

@@ -1,7 +1,7 @@
 import { Resource } from "sst";
 
 export const handler = async (event) => {
-	console.log('⛳️ START CONSUMER')
+	console.log('⛳️ START CONSUMER 2')
 
 	// supports batched events
 	const records = event.Records;
@@ -24,7 +24,7 @@ export const handler = async (event) => {
 		.filter((entry) => entry);
 
   console.log('entries=', entries);
-  console.log('⛳️ DONE')
+  console.log('⛳️ DONE CONSUMER 2')
 
 	return;
 };

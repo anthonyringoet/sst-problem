@@ -17,13 +17,17 @@ declare module "sst" {
       "type": "sst.aws.Function"
       "url": string
     }
-    "some": {
+    "one": {
       "type": "sst.aws.Queue"
       "url": string
     }
     "topic": {
       "arn": string
       "type": "sst.aws.SnsTopic"
+    }
+    "two": {
+      "type": "sst.aws.Queue"
+      "url": string
     }
   }
 }
